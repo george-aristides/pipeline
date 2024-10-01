@@ -146,9 +146,15 @@ class MLClassifierPipeline:
         # Check if the Decision Tree has been trained
         if 'Decision Tree' in self.trained_models:
             model = self.trained_models['Decision Tree'].named_steps['model']
+
+            # Get the original class names from the target column (e.g., 'e' and 'p')
+            class_names = self.y_train.unique()
+
+            # Get the feature names from the preprocessor
             feature_names = self.preprocessor.get_feature_names_out()
+
             plt.figure(figsize=(20, 10))
-            plot_tree(model, feature_names=feature_names, filled=True, rounded=True, class_names=True)
+            plot_tree(model, feature_names=feature_names, filled=True, rounded=True, class_names=class_names)
             plt.title('Decision Tree Visualization')
             plt.show()
         else:
